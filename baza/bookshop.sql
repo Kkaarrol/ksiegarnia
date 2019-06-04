@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 04 Cze 2019, 20:10
+-- Czas generowania: 05 Cze 2019, 00:29
 -- Wersja serwera: 10.1.36-MariaDB
 -- Wersja PHP: 5.6.38
 
@@ -75,16 +75,17 @@ CREATE TABLE `ksiazki` (
   `strony` int(11) NOT NULL,
   `cena` double NOT NULL,
   `opis` text COLLATE utf8_polish_ci NOT NULL,
-  `stan` int(11) NOT NULL
+  `stan` int(11) NOT NULL,
+  `okladka` text COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `ksiazki`
 --
 
-INSERT INTO `ksiazki` (`id_ksiazki`, `nazwa`, `autor`, `strony`, `cena`, `opis`, `stan`) VALUES
-(1, 'Symfonia C++', 'Jerzy Grębosz', 1126, 99.99, 'Must have początkującego programisty od Jerzego Grębosza!', 120),
-(2, 'Sieci komputerowe. Biblia', 'Barrie Sosinsky', 904, 99, 'Wszystko, co chcesz wiedzieć o sieciach komputerowych!', 80);
+INSERT INTO `ksiazki` (`id_ksiazki`, `nazwa`, `autor`, `strony`, `cena`, `opis`, `stan`, `okladka`) VALUES
+(1, 'Symfonia C++', 'Jerzy Grębosz', 1126, 99.99, 'Must have początkującego programisty od Jerzego Grębosza!', 120, 'img/books/symfonia.jpg'),
+(2, 'Sieci komputerowe. Biblia', 'Barrie Sosinsky', 904, 99, 'Wszystko, co chcesz wiedzieć o sieciach komputerowych!', 80, 'img/books/sieci.jpg');
 
 -- --------------------------------------------------------
 
