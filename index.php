@@ -52,7 +52,7 @@ $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
                     <a class="nav-link disabled" href="#">O nas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Konto</a>
+                    <a class="nav-link" href="index.php?page=acc">Konto</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#">Kontakt</a>

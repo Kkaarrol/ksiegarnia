@@ -1,10 +1,35 @@
 <?php
+function abc($name){
+//your code here
+}
+
 if (!defined("SYSTEM")) header('Location: index.php');
 
 $ksiazka = (int) addslashes(@$_GET['pokaz']);
 
-$result = mysqli_query($polaczenie, "SELECT nazwa, autor, strony, cena, opis, okladka FROM ksiazki WHERE id_ksiazki = {$ksiazka}");
+$zamowienie = -2;
+
+$result = mysqli_query($polaczenie, "SELECT * FROM `ksiazki` WHERE `id_ksiazki` = {$ksiazka}");
 if ($result && $row = mysqli_fetch_assoc($result)) {
+
+    $zamowienie = 0;
+    if(isset($_GET['koszyk'])) {
+        $stan = $row['stan'];
+
+        //szukam ostatniego zamowienia danej ksiazki by pobrac aktualny stan
+        $res = mysqli_query($polaczenie, "SELECT * FROM `zamowienia` WHERE `id_ksiazki` = {$ksiazka} ORDER BY data_zamowienia DESC");
+        if ($res && $r = mysqli_fetch_assoc($result)) {
+            $stan = $r['stan'];
+        }
+
+        if($stan-1 > 0) {
+            if ($polaczenie->query("INSERT INTO zamowienia VALUES ('', '{$_SESSION["id_klienta"]}', '{$ksiazka}','" . date("Y-m-d H:i:s") . "', '".date('Y-m-d', strtotime("+7 day"))."', '" . "w realizacji" . "')")) {
+                $zamowienie = 1;
+            }
+        } else {
+            $zamowienie = -1;
+        }
+    }
 ?>
 
 <div class="card mt-4">
@@ -13,7 +38,22 @@ if ($result && $row = mysqli_fetch_assoc($result)) {
         <h3 class="card-title"><?php echo $row['nazwa']; ?></h3>
         <h3 class="card-title"><?php echo $row['autor']; ?></h3>
         <h4><?php echo $row['cena']; ?> zł
-            <button type="button" class="btn btn-lg btn-primary">Dodaj do koszyka</button>
+            <?php
+            switch($zamowienie) {
+                case 0:
+                    echo '<a href="index.php?page=ksiazka&pokaz='.$ksiazka.'&koszyk" class="btn btn-lg btn-primary">Dodaj do koszyka</a>';
+                    break;
+                case 1:
+                    echo '<b>Zamówienie zostalo złożone</b>';
+                    break;
+                case -1:
+                    echo '<b>Brak książki na stanie</b>';
+                    break;
+                default:
+                    echo '<b>Musisz się zalogować by złożyć zamówienie</b>';
+                    break;
+            }
+            ?>
         </h4>
         <p class="card-text"><?php echo $row['opis']; ?></p>
     </div>

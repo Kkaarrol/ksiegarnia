@@ -30,18 +30,18 @@
 <div class="row">
 
     <?php
-    $ksiazki = mysqli_query($polaczenie, "SELECT nazwa, autor, strony, cena, opis, okladka FROM ksiazki");
+    $ksiazki = mysqli_query($polaczenie, "SELECT * FROM ksiazki");
     while ($ksiazki && $ksiazka = mysqli_fetch_assoc($ksiazki)) { ?>
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
                 <a href="index.php?page=ksiazka&pokaz=<?php print $ksiazka['id_ksiazki'] ?>">
-                    <img class="card-img-top" src="<?php print $ksiazka['okladka'] ?>" alt="img/books/symfonia.jpg">
+                    <img class="card-img-top" src="<?php print $ksiazka['okladka'] ?>" alt="">
                     <div class="card-body">
                         <h4 class="card-title">
                             <!-- <a href="#">Symfonia C++</a> -->
                             <span> <?php print $ksiazka['nazwa'] ?> </span>
                         </h4>
-                        <h5>$<?php print $ksiazka['cena'] ?></h5>
+                        <h5><?php print $ksiazka['cena'] ?>z³</h5>
                         <p class="card-text"> <?php print $ksiazka['opis'] ?> </p>
                     </div>
                 </a>

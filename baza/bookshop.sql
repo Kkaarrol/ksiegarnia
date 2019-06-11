@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 05 Cze 2019, 00:29
+-- Czas generowania: 11 Cze 2019, 10:52
 -- Wersja serwera: 10.1.36-MariaDB
 -- Wersja PHP: 5.6.38
 
@@ -60,7 +60,8 @@ INSERT INTO `klienci` (`id_klienta`, `login`, `Imie`, `Nazwisko`, `Adres`, `Tele
 (13, 'rgdrr123', 'asda', 'zczc', 'adq232', '848515252', 'weqe@pl.pl', '$2y$10$AaJ5w08XFWQsHjozvaPGuuLDJ5EqTAwVwT3.woP9Dq/hGdNoeDJqa', 1),
 (14, 'rgdrr321', 'wdds', 'acdcww', 'eff21', '9494847', 'sqwdef@op.pl', '$2y$10$DifNMGelbrnDxFPmy6.MzuZq3u4leQWO2S3wJsOqaNiwRN0goyjOa', 1),
 (15, 'rgdrr', '', '', '', '', 'wqdqdqwfd@wp.pl', '$2y$10$UwV92JmtQ6m/SaDX920y.u4MIIlqC7wFxm.z5KqbLvmuINancY1W.', 1),
-(16, 'qsx123', 'sada', 'sdsd', 'sdf3', '323', 'qsx123@wp.pl', '$2y$10$shkWp7uKm4pLXJnNgYLgJO84abFLP2BWC97irhbW.BmfcZaquT.OG', 1);
+(16, 'qsx123', 'sada', 'sdsd', 'sdf3', '323', 'qsx123@wp.pl', '$2y$10$shkWp7uKm4pLXJnNgYLgJO84abFLP2BWC97irhbW.BmfcZaquT.OG', 1),
+(17, 'adamson', 'Adam', 'Kejrl', 'asdad 21/87', '959848484', 'adamson@wp.pl', '$2y$10$TQbmysxNTWkaHQu1PRdgb.Vp78c/UHqvi/JgedMGvDsX9kppexNbW', 1);
 
 -- --------------------------------------------------------
 
@@ -85,7 +86,12 @@ CREATE TABLE `ksiazki` (
 
 INSERT INTO `ksiazki` (`id_ksiazki`, `nazwa`, `autor`, `strony`, `cena`, `opis`, `stan`, `okladka`) VALUES
 (1, 'Symfonia C++', 'Jerzy Grębosz', 1126, 99.99, 'Must have początkującego programisty od Jerzego Grębosza!', 120, 'img/books/symfonia.jpg'),
-(2, 'Sieci komputerowe. Biblia', 'Barrie Sosinsky', 904, 99, 'Wszystko, co chcesz wiedzieć o sieciach komputerowych!', 80, 'img/books/sieci.jpg');
+(2, 'Sieci komputerowe. Biblia', 'Barrie Sosinsky', 904, 99, 'Wszystko, co chcesz wiedzieć o sieciach komputerowych!', 80, 'img/books/sieci.jpg'),
+(3, 'Java. Podstawy. Wydanie X', 'Cay S. Horstmann', 872, 79.2, 'Książka Java. Podstawy od lat jest uznawana za najważniejszy praktyczny poradnik i podręcznik dla doświadczonych programistów dążących do doskonalenia swoich umiejętności w zakresie posługiwania się językiem Java.', 18, 'img/books/java.jpg'),
+(4, 'JavaScript - mocne strony', 'Douglas Crockford', 160, 39.9, 'JavaScript -- mocne strony\r\nPoznaj doskonałą użyteczność języka JavaScript!', 15, 'img/books/js.jpg'),
+(5, 'PHP7. Praktyczny kurs', 'Marcin Lis', 464, 69.98, 'Ta książka pomoże Ci szybko i bezboleśnie wejść w świat języka PHP w jego najnowszej wersji.', 45, 'img/books/php.jpg'),
+(6, 'Zrozumieć programowanie', 'Gynvael Coldwind', 550, 49.68, 'Książka jest techniczno - popularyzacyjną pozycją traktującą o programowaniu oraz tematach pokrewnych, i jest napisana z myślą o początkujących oraz średnio-zaawansowanych programistach, a także osobach, które dopiero chcą rozpocząć przygodę z programowaniem.', 21, 'img/books/gynvael.jpg'),
+(8, 'sfsdf', 'asda', 13, 14.14, 'asda', 0, 'asx');
 
 -- --------------------------------------------------------
 
@@ -101,6 +107,15 @@ CREATE TABLE `zamowienia` (
   `data_dostarczenia` date NOT NULL,
   `stan` text COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `zamowienia`
+--
+
+INSERT INTO `zamowienia` (`id_zamowienia`, `id_klienta`, `id_ksiazki`, `data_zamowienia`, `data_dostarczenia`, `stan`) VALUES
+(1, 16, 1, '2019-06-04', '2019-06-11', 'w realizacji'),
+(2, 16, 1, '2019-06-11', '2019-06-18', '119'),
+(3, 16, 3, '2019-06-11', '2019-06-18', 'w realizacji');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -124,8 +139,8 @@ ALTER TABLE `ksiazki`
 --
 ALTER TABLE `zamowienia`
   ADD PRIMARY KEY (`id_zamowienia`),
-  ADD UNIQUE KEY `id_klienta` (`id_klienta`),
-  ADD UNIQUE KEY `id_ksiazki` (`id_ksiazki`);
+  ADD KEY `id_klienta` (`id_klienta`) USING BTREE,
+  ADD KEY `id_ksiazki` (`id_ksiazki`) USING BTREE;
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -135,19 +150,19 @@ ALTER TABLE `zamowienia`
 -- AUTO_INCREMENT dla tabeli `klienci`
 --
 ALTER TABLE `klienci`
-  MODIFY `id_klienta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_klienta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT dla tabeli `ksiazki`
 --
 ALTER TABLE `ksiazki`
-  MODIFY `id_ksiazki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_ksiazki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT dla tabeli `zamowienia`
 --
 ALTER TABLE `zamowienia`
-  MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ograniczenia dla zrzutów tabel
